@@ -61,7 +61,6 @@ def add_cart(request):
         if len(oldgo)>0:
             oldgo[0].ccount = oldgo[0].ccount + int(good_count)
             oldgo[0].save()
-            # or you can write with :CartInfo.objects.filter(id=oldgo.id).update(ccount=sccount )
         else:
             new_cart.save()
     except BaseException as e:
@@ -70,11 +69,10 @@ def add_cart(request):
         content = {'status': 'Ok', 'text': '添加数据失败'}
         return HttpResponse(json.dumps(content))
     content = {'status': 'Ok', 'text': '添加数据成功'}
-    # return HttpResponse(json.dumps(content), content_type='application/json')
     return HttpResponse(json.dumps(content))
 
 
-# delete the id=cart_id raw
+# delete
 @login_decorator
 def delete_cart(request):
 
@@ -88,8 +86,7 @@ def delete_cart(request):
     content = {'status': 'Ok', 'text': '删除成功'}
     return HttpResponse(json.dumps(content))
 
-
-# add a new order , ads is means address ,cals means the goods which is selected,acot  means the count of goods
+#添加
 @login_decorator
 def add_order(request):
 
@@ -107,7 +104,7 @@ def add_order(request):
     content = {'status': 'Ok', 'text': '删除成功'}
     return HttpResponse(json.dumps(content))
 
-#show the order list
+#展示列表
 @login_decorator
 def order_list(request):
     user_id = request.session.get('user_id')
@@ -116,7 +113,7 @@ def order_list(request):
         order.cals = json.loads(order.cals)
     return render(request, 'user_center_order.html', {'orders': orders})
 
-#show order's address
+#展示订单地址
 @login_decorator
 def place_order(request):
     user_id = request.session.get('user_id')
